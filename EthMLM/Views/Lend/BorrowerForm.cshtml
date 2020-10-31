@@ -1,0 +1,202 @@
+@model UserWallet
+
+<div class="container-fluid">
+    <div class="page-header">
+
+
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-minus-circle bg-dark"></i>
+                    <div class="d-inline">
+                        <h5> Crypto Loans </h5>
+                        <span>Get a loan secured by your crypto assets. Guaranteed approval. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item">
+
+                        </li>
+
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--Account Balance --><div class="row clearfix">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="widget bg-dark">
+                <div class="widget-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="state">
+                            <h6>Currently Loanable Coins: USDT</h6>
+                            
+                        </div>
+                        <div class="icon">
+                            <i class="ik ik-file-text"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!--Account Balance End -->
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card" style="min-height: 484px;">
+                <div class="card-header"><h3>Borrow Form</h3></div>
+
+                <div class="card-body">
+
+                    @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        <div style="color:red">@Html.Raw(TempData["msg"])</div>
+                        <input type="hidden" id="coinPrice" name="coinPrice"/>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">I want to borrow (USD)</label>
+                            <input type="text" class="form-control" id="usd" name="usd" placeholder="How Many USD" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coin">Select Coin to Mortgage</label>
+                            <select class="form-control" id="coin" name="coin">
+                                <option value="BTC" selected>BTC</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Collateral Amount
+                            </label>
+                            <input type="text" class="form-control" id="amnt" name="amnt" placeholder="Amount" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputConfirmPassword1">Loan Term(days)</label>
+                            <input type="number" min="7" class="form-control" id="days" name="days" placeholder="How many Days" value="15">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Daily Interest Rate(%): @(LoanModel._dailyInterestRate*100)%
+                            </label><br />
+                            <label for="exampleInputPassword1">Repay Amount(USD): <b id="rpay">0</b> USD</label><br />
+                            <label id="cPrice"></label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<script>
+    var BTC =@Model.BTC;
+    var ETH =@Model.ETH;
+    var allowance=@LoanModel._allowanceRate;
+
+    $('#usd,#coin').on('change', function () {
+        var coin = $('#coin').val();
+        if (coin == "ETH") {
+            coin = "ethereum";
+        } else {
+            coin = "bitcoin";
+        }
+        $.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" + coin + "", function (data, status) {
+            console.log(data[0].current_price);
+            var price = data[0].current_price;
+            $('#coinPrice').val(price);
+            $('#cPrice').html(coin + ' price: ' + price);
+
+            var $val = parseFloat($('#usd').val());
+            console.log($val);
+            var crypto = $val / price;
+            console.log(crypto);
+            $('#amnt').val(crypto*2);
+
+        });
+
+
+
+    })
+
+    $('#usd,#days').on('change', function () {
+        var days = parseInt($('#days').val());
+        var val = @LoanModel._dailyInterestRate * days;
+        var $val = parseFloat($('#usd').val());
+        $('#rpay').html($val + ($val * val));
+
+
+        })
+
+
+
+
+    $(function () {
+
+        //$('#addrHolder').change();
+        //var totalCoins = totalCoin;
+
+        //$.validator.addMethod('lessThanEqual', function (value, param) {
+        //    totalCoin = $(param).text();
+        //    console.log(totalCoin);
+        //    return parseFloat(value + $('#feee').val()) <= parseFloat(totalCoin);
+        //}, "Amount must be less than " + $(param).text());
+    //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin //ethereum
+
+        var maxCoin = 0;
+
+        $.validator.addMethod('allowance', function(value, param) {
+            var coin = $('#coin').val();
+            var allowd = allowance / 100;
+            if (coin == "ETH") {
+                maxCoin = ETH * allowd;
+            } else {
+                maxCoin = BTC * allowd;
+            }
+
+
+            return maxCoin > value;
+        }, "Maximum Allowance is @LoanModel._allowanceRate % of your coin Fund");
+
+
+            $("form:last").validate({
+                rules: {
+                    amnt: {
+                        number: true,
+                        allowance: true
+                    }
+                }
+            });
+        })
+
+    //})
+
+
+
+
+</script>
