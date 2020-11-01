@@ -1,6 +1,11 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{24F62128-FB1D-4E95-9385-4DB47A5C854E}|Default">
   <MonoDevelop.Ide.ItemProperties.EthMLM PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="EthMLM/Views/Shared/_Header.cshtml">
+    <Files>
+      <File FileName="EthMLM/Views/Shared/_Layout.cshtml" Line="62" Column="49" />
+      <File FileName="EthMLM/Views/Shared/_SideMenu.cshtml" Line="33" Column="16" />
+      <File FileName="EthMLM/Views/Shared/_Header.cshtml" Line="5" Column="69" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -10,14 +15,14 @@
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Lend" expanded="True" />
-                <Node name="Shared" expanded="True" />
+                <Node name="Shared" expanded="True">
+                  <Node name="_Header.cshtml" selected="True" />
+                </Node>
               </Node>
               <Node name="wwwroot" expanded="True">
                 <Node name="demo" expanded="True">
                   <Node name="dist" expanded="True">
-                    <Node name="css" expanded="True">
-                      <Node name="theme.css" selected="True" />
-                    </Node>
+                    <Node name="css" expanded="True" />
                   </Node>
                 </Node>
               </Node>
