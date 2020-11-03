@@ -1,0 +1,180 @@
+@model UserWallet
+
+<div class="container-fluid">
+    <div class="page-header">
+
+
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-minus-circle bg-dark"></i>
+                    <div class="d-inline">
+                        <h5> Create Offer </h5>
+                        <span>Create Buy/Sell Offer </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item">
+
+                        </li>
+
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card" style="min-height: 484px;">
+              
+
+                <div class="card-body">
+
+                    @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        <div style="color:red">@Html.Raw(TempData["msg"])</div>
+                        <div class="form-group">
+                            <label for="Type">Offer Type</label>
+                            <select class="form-control" id="Type" name="Type">
+                                <option value="Buying" selected>Buying</option>
+                                <option value="Selling">Selling</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Coin">Select Coin</label>
+                            <select class="form-control" id="Coin" name="Coin">
+                                <option value="BTC" selected>BTC</option>
+                                <option value="ETH">ETH</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="LocalCurrency">Local Currency</label>
+                            <select class="form-control" id="LocalCurrency" name="LocalCurrency">
+                                <option value="USD" selected>USD</option>
+                                <option value="BDT">BDT</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PaymentMethod">Payment Method</label>
+                            <select class="form-control" id="PaymentMethod" name="PaymentMethod">
+                                <option value="Skrill" selected>Skrill</option>
+                                <option value="Payoneer">Payoneer</option>
+                                <option value="Paypal">Paypal</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="SetPricePercentage">
+                                Set Price Percentage
+                            </label>
+                            <input type="text" class="form-control" id="SetPricePercentage" name="SetPricePercentage" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="TradeLimit">Minimum - Maximum Trade Limit</label>
+                            <input type="number" class="form-control" id="MinTradeLimit" name="MinTradeLimit" value="100">
+                            -
+                            <input type="number" class="form-control" id="MaxTradeLimit" name="MaxTradeLimit" value="5000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="TradeCondition">
+                                Trade Condition
+                            </label>
+                            <input type="text" class="form-control" id="TradeCondition" name="TradeCondition" placeholder="Trade Condition" value="">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<script>
+    var BTC =@Model.BTC;
+    var ETH =@Model.ETH;
+
+    $('#usd,#coin').on('change', function () {
+        var coin = $('#coin').val();
+        if (coin == "ETH") {
+            coin = "ethereum";
+        } else {
+            coin = "bitcoin";
+        }
+        $.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" + coin + "", function (data, status) {
+            console.log(data[0].current_price);
+            var price = data[0].current_price;
+            $('#coinPrice').val(price);
+            $('#cPrice').html(coin + ' price: ' + price);
+
+            var $val = parseFloat($('#usd').val());
+            console.log($val);
+            var crypto = $val / price;
+            console.log(crypto);
+            $('#amnt').val(crypto*2);
+
+        });
+
+
+
+    })
+
+    
+
+
+
+
+    $(function () {
+
+        //$('#addrHolder').change();
+        //var totalCoins = totalCoin;
+
+        //$.validator.addMethod('lessThanEqual', function (value, param) {
+        //    totalCoin = $(param).text();
+        //    console.log(totalCoin);
+        //    return parseFloat(value + $('#feee').val()) <= parseFloat(totalCoin);
+        //}, "Amount must be less than " + $(param).text());
+    //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin //ethereum
+
+      
+
+
+            $("form:last").validate({
+                rules: {
+                    SetPricePercentage: {
+                        number: true
+                    }
+                }
+            });
+        })
+
+    //})
+
+
+
+
+</script>

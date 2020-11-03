@@ -1,0 +1,114 @@
+@model List<Offer>
+
+<div class="container-fluid">
+    <div class="page-header">
+
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-file-text bg-dark"></i>
+                    <div class="d-inline">
+                        <h5> User Offer History</h5>
+                        <span>Offer History</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+
+                        <li class="breadcrumb-item">
+
+                        </li>
+
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-block">
+                    <h3>Offer History</h3>
+                </div>
+                
+
+                @{
+                    int i = 0;
+                }
+
+
+                <div class="card-body">
+                    <div class="dt-responsive">
+                        <table id="table" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Offer Type</th>
+                                    <th>Coin</th>
+                                    <th>Payment Method</th>
+                                    <th>Price Percentage</th>
+                                    <th>Trade Limit</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Type</td>
+                                    <td class="text-left">
+                                        @item.Coin
+                                    </td>
+                                   
+                                    <td class="text-left">
+                                        @item.PaymentMethod
+                                    </td>
+                                    <td class="text-left">
+                                        @item.SetPricePercentage
+                                    </td>
+                                    <td class="text-left">
+                                        @item.MinTradeLimit - @item.MaxTradeLimit
+                                    </td>
+                                   
+                                    <td class="text-right">
+
+                                        <button href="@Url.Action("OfferIsOpenToggle",new { status=item.IsOpen,date=item.CreationTime})" type="button" class="btn btn-outline-success">@(!item.IsOpen? "Open":"Pause")</button>
+
+                                        <button href="@Url.Action("DeleteOffer",new { date=item.CreationTime})" type="button" class="btn btn-outline-danger">Close</button>
+
+                                    </td>
+                                </tr>
+                                }
+
+
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Language - -->
+        </div>
+    </div>
+</div>
