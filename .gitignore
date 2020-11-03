@@ -4,7 +4,7 @@
 
 /.vs/EthMLM/v16
 /.vs/EthMLM/config
-/EthMLM/bin/Debug/netcoreapp3.1
+/EthMLM/bin/Debug/netcoreapp3.0
 /EthMLM/obj
 /EthMLM/Properties
 /.vs/EthMLM/DesignTimeBuild
