@@ -30,18 +30,20 @@
 
 
         <div class="nav-item">
-            <a asp-action="Index" class=""><i class="ik ik-plus-circle"></i><span>BUY</span> </a>
+            <a asp-action="BuySell" asp-route-type="@OfferType.Buying" class=""><i class="ik ik-plus-circle"></i><span>BUY</span> </a>
         </div>
 
         <div class="nav-item">
-            <a asp-action="BorrowerForm"><i class="ik ik-plus-circle"></i><span>SELL</span> </a>
+            <a asp-action="BuySell" asp-route-type="@OfferType.Selling"><i class="ik ik-plus-circle"></i><span>SELL</span> </a>
         </div>
 
 
-        <br /><br />
+        <div class="nav-item">
+            <a asp-action="Dashboard"><i class="ik ik-plus-circle"></i><span>Dashboard</span> </a>
+        </div>
        
         <div class="nav-item">
-            <a asp-action="LendUSD"><i class="ik ik-plus-circle"></i><span>CREATE OFFER</span> </a>
+            <a asp-action="CreateOffer"><i class="ik ik-plus-circle"></i><span>CREATE OFFER</span> </a>
         </div>
 
         <div class="nav-item">

@@ -80,7 +80,7 @@ namespace EthMLM
 			{
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Lend}/{action=Index}/{id?}");
+					pattern: "{controller=Escrow}/{action=Index}/{id?}");
 				endpoints.MapRazorPages();
 			});
 

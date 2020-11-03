@@ -34,5 +34,6 @@
   
   <ItemGroup>
     <Folder Include="Views\Lend\" />
+    <Folder Include="Views\Escrow\" />
   </ItemGroup>
 </Project>

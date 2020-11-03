@@ -109,7 +109,7 @@ namespace EthMLM.Controllers
             };
 
                 await _signInManager.SignInWithClaimsAsync(user, true, claimCollection);
-                return RedirectToAction(nameof(LendController.Index), "Lend");
+                return RedirectToAction(nameof(EscrowController.Index), "Escrow");
             }
 
             TempData["msg"] = content;

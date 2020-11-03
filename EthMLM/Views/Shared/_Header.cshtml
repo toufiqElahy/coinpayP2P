@@ -15,14 +15,17 @@
         </div>
 
         <div class="top-menu align-items-center d-none d-lg-block">
-            <a asp-action="Index" class="btn btn-secondary m-2">BUY</a>
-            <a asp-action="Index" class="btn btn-secondary m-2">SELL</a>
+            <a asp-action="BuySell" asp-route-type="@OfferType.Buying" class="btn btn-secondary m-2">BUY</a>
+            <a asp-action="BuySell" asp-route-type="@OfferType.Selling" class="btn btn-secondary m-2">SELL</a>
+            <a asp-action="CreateOffer" class="btn btn-secondary m-2">CREATE OFFER</a>
 
+            <a asp-action="Dashboard" class="btn btn-primary m-2">Dashboard</a>
+
+            <a asp-action="Index" class="btn btn-secondary m-2">WALLET</a>
 
         </div>
         <div class="top-menu align-items-center d-none d-lg-block">
-            <a asp-action="Index" class="btn btn-secondary m-2">CREATE OFFER</a>
-            <a asp-action="Index" class="btn btn-secondary m-2">WALLET</a>
+            
 
         </div>
 

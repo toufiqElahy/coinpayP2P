@@ -1,0 +1,131 @@
+﻿@model List<Offer>
+
+
+
+
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" style="">
+
+                    <div class="card-body">
+
+                        @using (Html.BeginForm(FormMethod.Get, new { @class = "" }))
+                        {
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="Type">Offer Type</label>
+                                <select class="form-control" id="Type" name="Type">
+                                    <option value="Buying" selected>Buying</option>
+                                    <option value="Selling">Selling</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="Coin">Select Coin</label>
+                                <select class="form-control" id="Coin" name="Coin">
+                                    <option value="BTC" selected>BTC</option>
+                                    <option value="ETH">ETH</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="PaymentMethod">Payment Method</label>
+                                <select class="form-control" id="PaymentMethod" name="PaymentMethod">
+                                    <option value="Skrill" selected>Skrill</option>
+                                    <option value="Payoneer">Payoneer</option>
+                                    <option value="Paypal">Paypal</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                            <button type="submit" class="btn btn-primary mr-2">Search</button>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="container-fluid">
+       
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    
+
+
+                    
+
+
+                    <div class="card-body">
+                        <div class="dt-responsive">
+                            <table id="table" class="table table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Coin</th>
+                                        <th>Payment Method</th>
+                                        <th>Price Percentage</th>
+                                        <th>Trade Limit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 0;
+                                    }
+
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+
+                                        <tr>
+                                            <td class="text-left">
+                                                @item.Coin
+                                            </td>
+
+                                            <td class="text-left">
+                                                @item.PaymentMethod
+                                            </td>
+                                            <td class="text-left">
+                                                @item.SetPricePercentage
+                                            </td>
+                                            <td class="text-left">
+                                                @item.MinTradeLimit - @item.MaxTradeLimit
+                                            </td>
+
+                                            <td class="text-right">
+
+                                                <a href="#" type="button" class="btn btn-outline-success">@item.Type.Substring(0,3)</a>
+
+                                                
+                                            </td>
+                                        </tr>
+                                    }
+
+
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Language - -->
+            </div>
+        </div>
+    </div>
+
+
+
+
