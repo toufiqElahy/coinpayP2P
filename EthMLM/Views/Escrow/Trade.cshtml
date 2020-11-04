@@ -1,70 +1,119 @@
 ﻿@model Trade
 
 
+    <link rel="stylesheet" href="~/demo/signalr/chat.css">
+
+<div class="container-fluid">
+    <div class="page-header">
 
 
-    <div class="container-fluid">
-        <div class="page-header">
-
-
-            <div class="row align-items-end">
-                <div class="col-lg-8">
-                    <div class="page-header-title">
-                        <i class="ik ik-minus-circle bg-dark"></i>
-                        <div class="d-inline">
-                            <h5>Trade  </h5>
-                            <span>Messages </span>
-                        </div>
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-minus-circle bg-dark"></i>
+                    <div class="d-inline">
+                        <h5>Trade  </h5>
+                        <span>Messages </span>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <nav class="breadcrumb-container" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-
-                            <li class="breadcrumb-item">
-                                
-                            </li>
-                            
-
-                        </ol>
-                    </nav>
-                </div>
             </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
 
-        </div>
+                        <li class="breadcrumb-item">
+
+                        </li>
 
 
-      
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card" style="min-height: 484px;">
-                    <div class="card-header"><h3>Chat Messages</h3></div>
-
-                    <div class="card-body">
-
-                        @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
-                        {
-                            <div style="color:red">@Html.Raw(TempData["msg"])</div>
-                            <input type="hidden" name="tradeId" value="@Model.Id"/>
-                            <div class="form-group">
-                                <textarea class="form-control" id="text" name="text" placeholder="Write Yor Message" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-
-                            </div>
-                            <button type="submit" class="btn btn-primary mr-2">Send</button>
-                        }
-                    </div>
-
-                </div>
+                    </ol>
+                </nav>
             </div>
         </div>
-
-
 
     </div>
 
 
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card" style="min-height: 484px;">
+                <div class="card-header"><h3>Chat Messages</h3></div>
+
+                <div class="card-body">
+
+                    @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
+                    {
+                        <div style="color:red">@Html.Raw(TempData["msg"])</div>
+                        <input type="hidden" name="tradeId" value="@Model.Id" />
+                        <div class="form-group">
+
+                            <div id="chatbox">
+
+                                @Model.usd USD to Transfer For @Model.amnt @Model.offer.Coin <br />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="messageInput" name="text" placeholder="Write Yor Message" required></textarea>
+                        </div>
+
+
+                        <button type="submit" id="sendButton" class="btn btn-primary mr-2">Send</button>
+                    }
+
+
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<script src="~/demo/signalr/signalr.js"></script>
+
+
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    //Disable send button until connection is established
+    document.getElementById("sendButton").disabled = true;
+
+    connection.on("@Model.Id", function (user, message) {
+        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        var encodedMsg = user.split('@@')[0] + ": " + msg;
+        var li = document.createElement("div");
+        li.textContent = encodedMsg;
+        document.getElementById("chatbox").innerHTML += encodedMsg.replace(/\r?\n/g, '<br/>') + '<br>';
+    });
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var user = '@User.Identity.Name';
+        var message = document.getElementById("messageInput").value;
+        connection.invoke("SendMessage","@Model.Id", user, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+    });
+</script>
 

@@ -35,5 +35,6 @@
   <ItemGroup>
     <Folder Include="Views\Lend\" />
     <Folder Include="Views\Escrow\" />
+    <Folder Include="wwwroot\demo\signalr\" />
   </ItemGroup>
 </Project>

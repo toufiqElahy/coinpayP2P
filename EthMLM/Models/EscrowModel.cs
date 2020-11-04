@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace EthMLM.Models
 		public Guid Id { get; set; } = Guid.NewGuid();
 		public Guid OfferId { get; set; }//offer class
 	
-		public string Buyer { get; set; } = "";
-		public string Seller { get; set; } = "";
+		public double usd { get; set; }
+		public double amnt { get; set; }
 
 		public string Status { get; set; } = TradeStatus.Active; //Active/Completed/Cancelled/Expired
 
@@ -89,5 +90,14 @@ namespace EthMLM.Models
 	{
 		public static List<UserWallet> _userWallet = new List<UserWallet>();
 	}
-	
+
+
+	public class ChatHub : Hub
+	{
+		public async Task SendMessage(string tradeId,string user, string message)
+		{
+			await Clients.All.SendAsync(tradeId, user, message);
+		}
+	}
+
 }

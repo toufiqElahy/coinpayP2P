@@ -58,14 +58,14 @@ namespace EthMLM.Controllers
             return View(EscrowModel._offers.First(x => x.Id == offerId));
         }
         [HttpPost]
-        public IActionResult CreateTrade(Guid offerId,double min,double max)
+        public IActionResult CreateTrade(Guid offerId,double usd,double amnt)
         {
             string email = User.Identity.Name;
             var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Status == TradeStatus.Active && x.OfferId == offerId && x.Email == email);
             if (mTrade == null)
             {
                 var mOffer = EscrowModel._offers.First(x => x.Id == offerId);
-                mTrade = new Trade { Email = email, offer = mOffer, OfferEmail = mOffer.Email };
+                mTrade = new Trade { Email = email,OfferId=offerId, offer = mOffer, OfferEmail = mOffer.Email,usd=usd,amnt=amnt };
                 EscrowModel._trades.Add(mTrade);
                 var userWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == email);
             }

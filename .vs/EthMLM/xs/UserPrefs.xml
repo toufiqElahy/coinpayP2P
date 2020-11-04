@@ -2,12 +2,11 @@
   <MonoDevelop.Ide.ItemProperties.EthMLM PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="EthMLM/Views/Escrow/BuySell.cshtml" Line="106" Column="82" />
-      <File FileName="EthMLM/Models/EscrowModel.cs" Line="15" Column="43" />
-      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="73" Column="43" />
-      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="41" Column="63" />
-      <File FileName="EthMLM/Views/Escrow/Dashboard.cshtml" Line="75" Column="90" />
-      <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="61" Column="93" />
+      <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="109" Column="12" />
+      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="64" Column="1" />
+      <File FileName="EthMLM/Models/EscrowModel.cs" Line="12" Column="1" />
+      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="53" Column="94" />
+      <File FileName="EthMLM/Views/Lend/BorrowerForm.cshtml" Line="159" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,23 +17,10 @@
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Escrow" expanded="True">
-                  <Node name="Dashboard.cshtml" selected="True" />
+                  <Node name="CreateTrade.cshtml" selected="True" />
                 </Node>
+                <Node name="Lend" expanded="True" />
                 <Node name="Shared" expanded="True" />
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="demo" expanded="True">
-                  <Node name="dist" expanded="True">
-                    <Node name="css" expanded="True" />
-                  </Node>
-                  <Node name="nodemodules" expanded="True">
-                    <Node name="bootstrap" expanded="True">
-                      <Node name="dist" expanded="True">
-                        <Node name="css" expanded="True" />
-                      </Node>
-                    </Node>
-                  </Node>
-                </Node>
               </Node>
             </Node>
           </Node>

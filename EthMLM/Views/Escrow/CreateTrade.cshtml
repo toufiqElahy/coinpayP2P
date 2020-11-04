@@ -54,11 +54,11 @@
                             <label for="amnt">Step 1. Enter amount for @Model.Type:</label>
 
                             <div class="input-group">
-                                <input type="text" class="form-control" id="usd" name="usd" placeholder="Amount" required>
+                                <input type="text" class="form-control" id="usd" name="usd" placeholder="USD Amount" value="" required>
                                 <span class="input-group-text">@Model.LocalCurrency</span>
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="coin" name="coin" placeholder="Amount" required>
+                                <input type="text" class="form-control" id="amnt" name="amnt" placeholder="Coin Amount" readonly>
                                 <span class="input-group-text">@Model.Coin</span>
                             </div>
                             <span>Limits: @Model.MinTradeLimit to @Model.MaxTradeLimit @Model.LocalCurrency</span>
@@ -79,6 +79,36 @@
 
 
     </div>
+
+    <script>
+    $('#usd').on('change keyup', function () {
+        var coin = '@Model.Coin';
+        if (coin == "ETH") {
+            coin = "ethereum";
+        } else {
+            coin = "bitcoin";
+        }
+        $.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" + coin + "", function (data, status) {
+            console.log(data[0].current_price);
+            var price = data[0].current_price;
+            $('#coinPrice').val(price);
+            $('#cPrice').html(coin + ' price: ' + price);
+
+            var $val = parseFloat($('#usd').val());
+            console.log($val);
+            var crypto = $val / price;
+            console.log(crypto);
+            $('#amnt').val(crypto*2);
+
+        });
+
+    })
+
+     $(function () {
+
+           
+        })
+    </script>
 
 
 

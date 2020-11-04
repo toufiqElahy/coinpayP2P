@@ -37,6 +37,7 @@ namespace EthMLM
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			//services.AddControllersWithViews();
 			services.AddRazorPages();
+			services.AddSignalR();//chat
 
 			services.ConfigureApplicationCookie(options =>
 			{
@@ -82,6 +83,7 @@ namespace EthMLM
 					name: "default",
 					pattern: "{controller=Escrow}/{action=Index}/{id?}");
 				endpoints.MapRazorPages();
+				endpoints.MapHub<ChatHub>("/chathub");
 			});
 
 			//Bot Configurations

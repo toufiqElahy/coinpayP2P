@@ -103,7 +103,7 @@
 
                                             <td class="text-right">
 
-                                                <a href="@Url.Action("CreateTrade",new { offerId=item.Id})" type="button" class="btn btn-outline-success">@item.Type.Substring(0,3)</a>
+                                                <a href="@Url.Action("CreateTrade",new { offerId=item.Id})" type="button" class="btn btn-outline-success">@item.Type.Substring(0,4).TrimEnd('i')</a>
 
                                                 
                                             </td>
