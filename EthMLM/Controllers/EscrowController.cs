@@ -49,9 +49,41 @@ namespace EthMLM.Controllers
         {
             if (coin != null)
             {
-                return View(OfferModel._offers.Where(x => x.Type == type && x.IsOpen &&x.Coin==coin&&x.PaymentMethod==paymentMethod).ToList());
+                return View(EscrowModel._offers.Where(x => x.Type == type && x.IsOpen &&x.Coin==coin&&x.PaymentMethod==paymentMethod).ToList());
             }
-            return View(OfferModel._offers.Where(x => x.Type == type && x.IsOpen).ToList());
+            return View(EscrowModel._offers.Where(x => x.Type == type && x.IsOpen).ToList());
+        }
+        public IActionResult CreateTrade(Guid offerId)
+        {
+            return View(EscrowModel._offers.First(x => x.Id == offerId));
+        }
+        [HttpPost]
+        public IActionResult CreateTrade(Guid offerId,double min,double max)
+        {
+            string email = User.Identity.Name;
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Status == TradeStatus.Active && x.OfferId == offerId && x.Email == email);
+            if (mTrade == null)
+            {
+                var mOffer = EscrowModel._offers.First(x => x.Id == offerId);
+                mTrade = new Trade { Email = email, offer = mOffer, OfferEmail = mOffer.Email };
+                EscrowModel._trades.Add(mTrade);
+                var userWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == email);
+            }
+
+            return RedirectToAction("Trade", new { tradeId = mTrade.Id });
+        }
+        public IActionResult Trade(Guid tradeId)
+        {
+            string email = User.Identity.Name;
+            var mTrade = EscrowModel._trades.FirstOrDefault(x =>x.Id==tradeId);
+            
+            return View(mTrade);
+        }
+        [HttpPost]
+        public IActionResult Trade(Guid tradeId,string text)
+        {
+
+            return View();
         }
         public IActionResult CreateOffer()
         {
@@ -63,17 +95,19 @@ namespace EthMLM.Controllers
         public IActionResult CreateOffer(Offer mOffer)
         {
             mOffer.Email = User.Identity.Name;
-            OfferModel._offers.Add(mOffer);
+            EscrowModel._offers.Add(mOffer);
             return RedirectToAction("Dashboard");
         }
         public IActionResult Dashboard()
         {
-            return View(OfferModel._offers.Where(x=>x.Email==User.Identity.Name).ToList());
+            string email = User.Identity.Name;
+            ViewBag.ActiveTrades = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email==email) && x.Status==TradeStatus.Active).ToList();
+            return View(EscrowModel._offers.Where(x=>x.Email==User.Identity.Name).ToList());
         }
         public IActionResult OfferIsOpenToggle(bool status,DateTime date)
         {
             string email = User.Identity.Name;
-            var mOffer = OfferModel._offers.FirstOrDefault(x => x.Email == email && x.CreationTime.ToString().Contains(date.ToString()));
+            var mOffer = EscrowModel._offers.FirstOrDefault(x => x.Email == email && x.CreationTime.ToString().Contains(date.ToString()));
             //operate
             mOffer.IsOpen = !status;
             return RedirectToAction("Dashboard");
@@ -81,9 +115,9 @@ namespace EthMLM.Controllers
         public IActionResult DeleteOffer(DateTime date)
         {
             string email = User.Identity.Name;
-            var mOffer = OfferModel._offers.FirstOrDefault(x => x.Email == email && x.CreationTime.ToString().Contains(date.ToString()));
+            var mOffer = EscrowModel._offers.FirstOrDefault(x => x.Email == email && x.CreationTime.ToString().Contains(date.ToString()));
             //operate
-            OfferModel._offers.Remove(mOffer);
+            EscrowModel._offers.Remove(mOffer);
             return RedirectToAction("Dashboard");
         }
 

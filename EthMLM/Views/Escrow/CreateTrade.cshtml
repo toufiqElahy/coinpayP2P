@@ -1,0 +1,85 @@
+﻿@model Offer
+
+
+
+
+    <div class="container-fluid">
+        <div class="page-header">
+
+
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="ik ik-minus-circle bg-dark"></i>
+                        <div class="d-inline">
+                            <h5> You Are @Model.Type </h5>
+                            <span>With @Model.Email </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <nav class="breadcrumb-container" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item">
+                                
+                            </li>
+                            
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+        
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="">
+                    <div class="card-header"><h3>Create Trade</h3></div>
+
+                    <div class="card-body">
+
+                        @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
+                        {
+                            <div style="color:red">@Html.Raw(TempData["msg"])</div>
+                        <input type="hidden" name="offerId" value="@Model.Id"/>
+
+                           
+
+                        <div class="form-group">
+                            <label for="amnt">Step 1. Enter amount for @Model.Type:</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="usd" name="usd" placeholder="Amount" required>
+                                <span class="input-group-text">@Model.LocalCurrency</span>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="coin" name="coin" placeholder="Amount" required>
+                                <span class="input-group-text">@Model.Coin</span>
+                            </div>
+                            <span>Limits: @Model.MinTradeLimit to @Model.MaxTradeLimit @Model.LocalCurrency</span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label for="amnt">Step 2. Click to trade</label><br />
+                            <button type="submit" class="btn btn-primary mr-2">Start Trade</button>
+                        </div>
+                            
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+

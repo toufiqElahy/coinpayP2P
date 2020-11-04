@@ -1,0 +1,70 @@
+﻿@model Trade
+
+
+
+
+    <div class="container-fluid">
+        <div class="page-header">
+
+
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="ik ik-minus-circle bg-dark"></i>
+                        <div class="d-inline">
+                            <h5>Trade  </h5>
+                            <span>Messages </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <nav class="breadcrumb-container" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item">
+                                
+                            </li>
+                            
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+
+
+      
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="min-height: 484px;">
+                    <div class="card-header"><h3>Chat Messages</h3></div>
+
+                    <div class="card-body">
+
+                        @using (Html.BeginForm(FormMethod.Post, new { @class = "forms-sample" }))
+                        {
+                            <div style="color:red">@Html.Raw(TempData["msg"])</div>
+                            <input type="hidden" name="tradeId" value="@Model.Id"/>
+                            <div class="form-group">
+                                <textarea class="form-control" id="text" name="text" placeholder="Write Yor Message" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Send</button>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+

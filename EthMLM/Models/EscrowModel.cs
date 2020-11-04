@@ -6,8 +6,32 @@ using System.Threading.Tasks;
 
 namespace EthMLM.Models
 {
+	public class Trade
+	{
+		public Guid Id { get; set; } = Guid.NewGuid();
+		public Guid OfferId { get; set; }//offer class
+	
+		public string Buyer { get; set; } = "";
+		public string Seller { get; set; } = "";
+
+		public string Status { get; set; } = TradeStatus.Active; //Active/Completed/Cancelled/Expired
+
+		public string Email = "";//UserIdentity (trade creator)
+		public string OfferEmail = "";//UserIdentity (offer creator)
+		public DateTime CreationTime = DateTime.UtcNow;
+
+		public Offer offer { get; set; }
+	}
+	public static class TradeStatus
+	{
+		public static string Active = "Active";
+		public static string Completed = "Completed";
+		public static string Cancelled = "Cancelled";
+		public static string Expired = "Expired";
+	}
 	public class Offer
 	{
+		public Guid Id { get; set; } = Guid.NewGuid();
 		public string Type { get; set; }//Buying/Selling
 		public string Coin { get; set; } //BTC/ETH/USD
 		public string Location { get; set; } = "";
@@ -20,9 +44,9 @@ namespace EthMLM.Models
 		public string AvailableToTrade { get; set; } = "";
 
 		public bool IsOpen { get; set; } = true; //Open/Pause
-		public string TradeStatus { get; set; } = ""; //Active/Completed/Cancelled/Expired
+		//public string TradeStatus { get; set; } = ""; //Active/Completed/Cancelled/Expired
 
-		public string Email = "";//UserIdentity
+		public string Email = "";//UserIdentity (offer creator)
 		public DateTime CreationTime = DateTime.UtcNow;
 	}
 	public static class Coin
@@ -48,10 +72,10 @@ namespace EthMLM.Models
 		public static string USD = "USD";
 	}
 
-	public static class OfferModel
+	public static class EscrowModel
 	{
 		public static List<Offer> _offers = new List<Offer>();
-		
+		public static List<Trade> _trades = new List<Trade>();
 	}
 
 	public class UserWallet

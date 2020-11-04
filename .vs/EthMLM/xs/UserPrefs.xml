@@ -1,31 +1,37 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{24F62128-FB1D-4E95-9385-4DB47A5C854E}|Default">
   <MonoDevelop.Ide.ItemProperties.EthMLM PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EthMLM/Controllers/EscrowController.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="EthMLM/wwwroot/demo/dist/css/theme.css" Line="2138" Column="22" />
-      <File FileName="EthMLM/Views/Shared/_SideMenu.cshtml" Line="1" Column="1" />
-      <File FileName="EthMLM/Views/Shared/_Layout.cshtml" Line="23" Column="55" />
-      <File FileName="EthMLM/Views/Escrow/BuySell.cshtml" Line="70" Column="79" />
-      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="1" Column="1" />
+      <File FileName="EthMLM/Views/Escrow/BuySell.cshtml" Line="106" Column="82" />
+      <File FileName="EthMLM/Models/EscrowModel.cs" Line="15" Column="43" />
+      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="73" Column="43" />
+      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="41" Column="63" />
+      <File FileName="EthMLM/Views/Escrow/Dashboard.cshtml" Line="75" Column="90" />
+      <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="61" Column="93" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="EthMLM" expanded="True">
             <Node name="EthMLM" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="EscrowController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Escrow" expanded="True" />
+                <Node name="Escrow" expanded="True">
+                  <Node name="Dashboard.cshtml" selected="True" />
+                </Node>
                 <Node name="Shared" expanded="True" />
               </Node>
               <Node name="wwwroot" expanded="True">
                 <Node name="demo" expanded="True">
                   <Node name="dist" expanded="True">
-                    <Node name="css" expanded="True">
-                      <Node name="theme.css" expanded="True" />
+                    <Node name="css" expanded="True" />
+                  </Node>
+                  <Node name="nodemodules" expanded="True">
+                    <Node name="bootstrap" expanded="True">
+                      <Node name="dist" expanded="True">
+                        <Node name="css" expanded="True" />
+                      </Node>
                     </Node>
                   </Node>
                 </Node>

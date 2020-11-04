@@ -16,7 +16,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="Type">Offer Type</label>
+                                <label for="Type">You Are:</label>
                                 <select class="form-control" id="Type" name="Type">
                                     <option value="Buying" selected>Buying</option>
                                     <option value="Selling">Selling</option>
@@ -103,7 +103,7 @@
 
                                             <td class="text-right">
 
-                                                <a href="#" type="button" class="btn btn-outline-success">@item.Type.Substring(0,3)</a>
+                                                <a href="@Url.Action("CreateTrade",new { offerId=item.Id})" type="button" class="btn btn-outline-success">@item.Type.Substring(0,3)</a>
 
                                                 
                                             </td>
