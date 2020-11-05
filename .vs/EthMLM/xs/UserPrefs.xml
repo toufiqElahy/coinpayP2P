@@ -3,10 +3,9 @@
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="109" Column="12" />
-      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="64" Column="1" />
-      <File FileName="EthMLM/Models/EscrowModel.cs" Line="12" Column="1" />
-      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="53" Column="94" />
-      <File FileName="EthMLM/Views/Lend/BorrowerForm.cshtml" Line="159" Column="4" />
+      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="84" Column="1" />
+      <File FileName="EthMLM/Models/EscrowModel.cs" Line="24" Column="43" />
+      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="101" Column="67" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,7 +16,7 @@
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Escrow" expanded="True">
-                  <Node name="CreateTrade.cshtml" selected="True" />
+                  <Node name="Trade.cshtml" selected="True" />
                 </Node>
                 <Node name="Lend" expanded="True" />
                 <Node name="Shared" expanded="True" />

@@ -80,6 +80,14 @@ namespace EthMLM.Controllers
             return View(mTrade);
         }
         [HttpPost]
+        public bool TradeMessage(Guid tradeId,string msg)
+        {
+            string email = User.Identity.Name;
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            mTrade.Message = msg;
+            return true;
+        }
+        [HttpPost]
         public IActionResult Trade(Guid tradeId,string text)
         {
 

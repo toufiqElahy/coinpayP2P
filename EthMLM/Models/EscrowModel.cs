@@ -21,6 +21,8 @@ namespace EthMLM.Models
 		public string OfferEmail = "";//UserIdentity (offer creator)
 		public DateTime CreationTime = DateTime.UtcNow;
 
+		public string Message { get; set; } = "";
+
 		public Offer offer { get; set; }
 	}
 	public static class TradeStatus

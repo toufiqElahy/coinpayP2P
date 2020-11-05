@@ -47,11 +47,8 @@
                         <div style="color:red">@Html.Raw(TempData["msg"])</div>
                         <input type="hidden" name="tradeId" value="@Model.Id" />
                         <div class="form-group">
-
-                            <div id="chatbox">
-
-                                @Model.usd USD to Transfer For @Model.amnt @Model.offer.Coin <br />
-                            </div>
+                            @Model.usd USD to Transfer For @Model.amnt @Model.offer.Coin <br />
+                            <div id="chatbox">@Html.Raw(Model.Message)</div>
 
                         </div>
                         <div class="form-group">
@@ -90,6 +87,8 @@
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
+    
+
     //Disable send button until connection is established
     document.getElementById("sendButton").disabled = true;
 
@@ -98,7 +97,18 @@
         var encodedMsg = user.split('@@')[0] + ": " + msg;
         var li = document.createElement("div");
         li.textContent = encodedMsg;
-        document.getElementById("chatbox").innerHTML += encodedMsg.replace(/\r?\n/g, '<br/>') + '<br>';
+        //document.getElementById("chatbox").innerHTML += encodedMsg.replace(/\r?\n/g, '<br/>') + '<br>';
+        $('#chatbox').append(encodedMsg.replace(/\r?\n/g, '<br/>')+'<br>');
+
+        $.post("@Url.Action("TradeMessage",new { tradeId=Model.Id})",
+            {
+                msg: JSON.stringify($('#chatbox').html())
+            },
+            function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+            });
+
+
     });
 
     connection.start().then(function () {
