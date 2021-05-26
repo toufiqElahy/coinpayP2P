@@ -41,7 +41,7 @@
         <div class="nav-item">
             <a asp-action="Dashboard"><i class="ik ik-plus-circle"></i><span>Dashboard</span> </a>
         </div>
-       
+
         <div class="nav-item">
             <a asp-action="CreateOffer"><i class="ik ik-plus-circle"></i><span>CREATE OFFER</span> </a>
         </div>
@@ -50,8 +50,13 @@
             <a asp-action="Index"><i class="ik ik-plus-circle"></i><span>WALLET</span> </a>
         </div>
 
+        @if (User.Identity.Name == "toufiqelahy@hotmail.com")
+        {
+            <div class="nav-item">
+                <a asp-action="Admin"><i class="ik ik-plus-circle"></i><span>Admin</span> </a>
+            </div>
+        }
 
-       
 
     </nav>
 </div>

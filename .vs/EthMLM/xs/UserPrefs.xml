@@ -1,27 +1,33 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{24F62128-FB1D-4E95-9385-4DB47A5C854E}|Default">
   <MonoDevelop.Ide.ItemProperties.EthMLM PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EthMLM/Controllers/EscrowController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EthMLM/Views/Escrow/Admin.cshtml">
     <Files>
-      <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="62" Column="25" />
-      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="171" Column="200" />
-      <File FileName="EthMLM/Models/EscrowModel.cs" Line="51" Column="29" />
-      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="46" Column="22" />
-      <File FileName="EthMLM/Views/Escrow/BuySell.cshtml" Line="117" Column="52" />
-      <File FileName="EthMLM/Views/Shared/_SideMenu.cshtml" Line="33" Column="35" />
+      <File FileName="EthMLM/Views/Escrow/CreateTrade.cshtml" Line="59" Column="23" />
+      <File FileName="EthMLM/Controllers/EscrowController.cs" Line="131" Column="95" />
+      <File FileName="EthMLM/Models/EscrowModel.cs" Line="20" Column="64" />
+      <File FileName="EthMLM/Views/Escrow/Trade.cshtml" Line="114" Column="44" />
+      <File FileName="EthMLM/Views/Escrow/Dashboard.cshtml" Line="21" Column="72" />
+      <File FileName="EthMLM/Views/Escrow/Admin.cshtml" Line="57" Column="64" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="EthMLM" expanded="True">
             <Node name="EthMLM" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="EscrowController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Escrow" expanded="True" />
+                <Node name="Escrow" expanded="True">
+                  <Node name="Admin.cshtml" selected="True" />
+                </Node>
                 <Node name="Lend" expanded="True" />
                 <Node name="Shared" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="demo" expanded="True">
+                  <Node name="signalr" expanded="True" />
+                </Node>
               </Node>
             </Node>
           </Node>

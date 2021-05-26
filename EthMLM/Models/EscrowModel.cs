@@ -17,7 +17,7 @@ namespace EthMLM.Models
 										//public double lockedAmount { get; set; }
 
 		public string Status { get; set; } = TradeStatus.Active; //Active/Completed/Cancelled/Expired
-
+		public string PayStatus { get; set; } = PaymentStatus.UnPaid;
 		public string Email = "";//UserIdentity (trade creator)
 		public string OfferEmail = "";//UserIdentity (offer creator)
 		public DateTime CreationTime = DateTime.UtcNow;
@@ -33,6 +33,14 @@ namespace EthMLM.Models
 		public static string Completed = "Completed";
 		public static string Cancelled = "Cancelled";
 		public static string Expired = "Expired";
+
+		public static string Appeal = "Appeal";//third party to verify
+		//public static string SentPayment = "SentPayment";
+	}
+	public static class PaymentStatus
+	{
+		public static string Paid = "Paid";
+		public static string UnPaid = "UnPaid";
 	}
 	public class Offer
 	{

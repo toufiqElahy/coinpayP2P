@@ -1,5 +1,10 @@
 ﻿@model Trade
 
+<style>
+    .hide{
+        display:none;
+    }
+</style>
 
     <link rel="stylesheet" href="~/demo/signalr/chat.css">
 
@@ -57,14 +62,17 @@
 
 
                         <button type="submit" id="sendButton" class="btn btn-primary mr-2">Send</button>
-                        @if (Model.OfferEmail != User.Identity.Name)
+                        @if (Model.OfferEmail != User.Identity.Name && Model.PayStatus!=PaymentStatus.Paid)
                         {
                             <a href="@Url.Action("SentPayment",new { tradeId=Model.Id})" class="btn btn-warning mr-2">Click here Once Payment Done</a>
                             <a href="@Url.Action("CancelTrade",new { tradeId=Model.Id})" class="btn btn-danger mr-2">Cancel Trade</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("PaymentReceive",new { tradeId=Model.Id})" class="btn btn-success mr-2">Click here Once Payment Receive</a>
+                <div id="payment" class="@(Model.PayStatus==PaymentStatus.Paid && Model.OfferEmail == User.Identity.Name? "":"hide")">
+                    <a href="@Url.Action("PaymentReceive",new { tradeId=Model.Id})" class="btn btn-success mr-2">Click here Once Payment Receive</a>
+                    <a href="@Url.Action("Appeal",new { tradeId=Model.Id})" class="btn btn-danger mr-2">Appeal</a>
+                </div>
                         }
 
                     }
@@ -103,6 +111,10 @@
     document.getElementById("sendButton").disabled = true;
 
     connection.on("@Model.Id", function (user, message) {
+        if (message == '@PaymentStatus.Paid') {
+            $('#payment').removeClass('hide');
+            
+        }
         var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         var encodedMsg = user.split('@@')[0] + ": " + msg;
         var li = document.createElement("div");

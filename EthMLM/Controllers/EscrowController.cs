@@ -7,6 +7,7 @@ using EthMLM.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.NodeServices;
+using Microsoft.AspNetCore.SignalR;
 using Nethereum.Web3;
 using Newtonsoft.Json.Linq;
 
@@ -15,6 +16,12 @@ namespace EthMLM.Controllers
     [Authorize]
     public class EscrowController : Controller
     {
+        private readonly IHubContext<ChatHub> _hubContext;
+        public EscrowController(IHubContext<ChatHub> hubContext)
+        {
+            _hubContext = hubContext;
+        }
+
         public IActionResult Index()
         {
             string email = User.Identity.Name;
@@ -95,7 +102,12 @@ namespace EthMLM.Controllers
         {
             string email = User.Identity.Name;
             var mTrade = EscrowModel._trades.FirstOrDefault(x =>x.Id==tradeId);
-            
+
+            if(mTrade.CreationTime.AddMinutes(mTrade.offer.ExpireInMinutes) < DateTime.UtcNow && mTrade.Status==TradeStatus.Active)
+            {
+                mTrade.Status = TradeStatus.Expired;
+            }
+
             return View(mTrade);
         }
         [HttpPost]
@@ -109,8 +121,23 @@ namespace EthMLM.Controllers
         [HttpPost]
         public IActionResult Trade(Guid tradeId,string text)
         {
-
             return View();
+        }
+        public async Task<IActionResult> SentPayment(Guid tradeId)
+        {
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            mTrade.PayStatus = PaymentStatus.Paid;
+      
+            await _hubContext.Clients.All.SendAsync(tradeId.ToString(), User.Identity.Name, PaymentStatus.Paid);
+            return RedirectToAction("Trade",new { tradeId });
+        }
+        public async Task<IActionResult> Appeal(Guid tradeId)
+        {
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            mTrade.Status = TradeStatus.Appeal;
+
+            await _hubContext.Clients.All.SendAsync(tradeId.ToString(), User.Identity.Name, TradeStatus.Appeal);
+            return RedirectToAction("Trade", new { tradeId });
         }
         public IActionResult CancelTrade(Guid tradeId)
         {
@@ -168,8 +195,20 @@ namespace EthMLM.Controllers
         public IActionResult Dashboard()
         {
             string email = User.Identity.Name;
-            ViewBag.ActiveTrades = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email==email) && x.CreationTime.AddMinutes(x.offer.ExpireInMinutes)>DateTime.UtcNow && x.Status==TradeStatus.Active).ToList();
+            ViewBag.ActiveTrades = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email==email) && (x.Status==TradeStatus.Active || x.Status==TradeStatus.Appeal)).ToList();
             return View(EscrowModel._offers.Where(x=>x.Email==User.Identity.Name).ToList());
+        }
+        public IActionResult TradeHistory()
+        {
+            string email = User.Identity.Name;
+            var tradeHistory = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email == email) && !(x.Status == TradeStatus.Active || x.Status == TradeStatus.Appeal)).ToList();
+            return View(tradeHistory);
+        }
+        public IActionResult Admin()
+        {
+            string email = User.Identity.Name;
+            var appealHistory = EscrowModel._trades.Where(x=>x.Status == TradeStatus.Appeal).ToList();
+            return View(appealHistory);
         }
         public IActionResult OfferIsOpenToggle(bool status,DateTime date)
         {
