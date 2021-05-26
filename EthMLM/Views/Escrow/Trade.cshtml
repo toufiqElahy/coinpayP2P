@@ -57,16 +57,22 @@
 
 
                         <button type="submit" id="sendButton" class="btn btn-primary mr-2">Send</button>
+                        @if (Model.OfferEmail != User.Identity.Name)
+                        {
+                            <a href="submit" id="" class="btn btn-warning mr-2">Click here Once Payment Done</a>
+                            <a href="@Url.Action("CancelTrade",new { tradeId=Model.Id})" class="btn btn-danger mr-2">Cancel Trade</a>
+                        }
+
                     }
 
 
-                    
+
                     <div class="row">
                         <div class="col-12">
                             <hr />
                         </div>
                     </div>
-                    
+
 
                 </div>
 
@@ -120,6 +126,8 @@
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var user = '@User.Identity.Name';
         var message = document.getElementById("messageInput").value;
+        console.log(message);
+        document.getElementById("messageInput").value = "";
         connection.invoke("SendMessage","@Model.Id", user, message).catch(function (err) {
             return console.error(err.toString());
         });

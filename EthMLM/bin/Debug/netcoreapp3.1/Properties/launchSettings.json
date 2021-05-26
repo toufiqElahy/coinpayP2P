@@ -7,7 +7,7 @@
     "EthMLM": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:47575",
+      "applicationUrl": "http://localhost:18554",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

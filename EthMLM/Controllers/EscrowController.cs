@@ -47,6 +47,14 @@ namespace EthMLM.Controllers
         }
         public IActionResult BuySell(string type,string coin,string paymentMethod)
         {
+            if (type == OfferType.Buying) {
+                type = OfferType.Selling;
+            }
+            else
+            {
+                type = OfferType.Buying;
+            }
+
             if (coin != null)
             {
                 return View(EscrowModel._offers.Where(x => x.Type == type && x.IsOpen &&x.Coin==coin&&x.PaymentMethod==paymentMethod).ToList());
@@ -55,6 +63,7 @@ namespace EthMLM.Controllers
         }
         public IActionResult CreateTrade(Guid offerId)
         {
+
             return View(EscrowModel._offers.First(x => x.Id == offerId));
         }
         [HttpPost]
@@ -93,6 +102,13 @@ namespace EthMLM.Controllers
 
             return View();
         }
+        public IActionResult CancelTrade(Guid tradeId)
+        {
+            string email = User.Identity.Name;
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            mTrade.Status = TradeStatus.Cancelled;
+            return RedirectToAction("Dashboard");
+        }
         public IActionResult CreateOffer()
         {
             string email = User.Identity.Name;
@@ -128,6 +144,9 @@ namespace EthMLM.Controllers
             EscrowModel._offers.Remove(mOffer);
             return RedirectToAction("Dashboard");
         }
+
+
+
 
         public IActionResult RepayLoan(DateTime date)
         {

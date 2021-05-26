@@ -65,8 +65,18 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <label for="amnt">Step 2. Click to trade</label><br />
-                            <button type="submit" class="btn btn-primary mr-2">Start Trade</button>
+
+                            @if (Model.Email != User.Identity.Name)
+                            {
+                                <label for="amnt">Step 2. Click to trade</label><br />
+                                <button type="submit" class="btn btn-primary mr-2">Start Trade</button>
+                            }
+                            else
+                            {
+                        <button type="submit" class="btn btn-primary mr-2" disabled>Can't Trade YourSelf</button>
+                            }
+
+
                         </div>
                             
                         }
