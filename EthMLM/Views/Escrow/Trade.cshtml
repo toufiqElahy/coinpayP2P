@@ -59,8 +59,12 @@
                         <button type="submit" id="sendButton" class="btn btn-primary mr-2">Send</button>
                         @if (Model.OfferEmail != User.Identity.Name)
                         {
-                            <a href="submit" id="" class="btn btn-warning mr-2">Click here Once Payment Done</a>
+                            <a href="@Url.Action("SentPayment",new { tradeId=Model.Id})" class="btn btn-warning mr-2">Click here Once Payment Done</a>
                             <a href="@Url.Action("CancelTrade",new { tradeId=Model.Id})" class="btn btn-danger mr-2">Cancel Trade</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("PaymentReceive",new { tradeId=Model.Id})" class="btn btn-success mr-2">Click here Once Payment Receive</a>
                         }
 
                     }

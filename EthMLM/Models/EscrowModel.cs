@@ -13,7 +13,8 @@ namespace EthMLM.Models
 		public Guid OfferId { get; set; }//offer class
 	
 		public double usd { get; set; }
-		public double amnt { get; set; }
+		public double amnt { get; set; }//lockedAmount
+										//public double lockedAmount { get; set; }
 
 		public string Status { get; set; } = TradeStatus.Active; //Active/Completed/Cancelled/Expired
 
@@ -22,6 +23,7 @@ namespace EthMLM.Models
 		public DateTime CreationTime = DateTime.UtcNow;
 
 		public string Message { get; set; } = "";
+		//public int ExpireInMinutes { get; set; }
 
 		public Offer offer { get; set; }
 	}
@@ -45,6 +47,8 @@ namespace EthMLM.Models
 		public double MaxTradeLimit { get; set; } = 5000;//100-1000 BDT
 		public string TradeCondition { get; set; } = "";
 		public string AvailableToTrade { get; set; } = "";
+
+		public int ExpireInMinutes { get; set; } = 30;//by default 30 minutes
 
 		public bool IsOpen { get; set; } = true; //Open/Pause
 		//public string TradeStatus { get; set; } = ""; //Active/Completed/Cancelled/Expired

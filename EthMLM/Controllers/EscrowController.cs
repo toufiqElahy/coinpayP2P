@@ -74,9 +74,19 @@ namespace EthMLM.Controllers
             if (mTrade == null)
             {
                 var mOffer = EscrowModel._offers.First(x => x.Id == offerId);
+                //var userWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == email);
                 mTrade = new Trade { Email = email,OfferId=offerId, offer = mOffer, OfferEmail = mOffer.Email,usd=usd,amnt=amnt };
                 EscrowModel._trades.Add(mTrade);
-                var userWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == email);
+
+                var userOfferWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == mOffer.Email);
+                if (mOffer.Coin == Coin.BTC)
+                {
+                    userOfferWallet.BTC = userOfferWallet.BTC - amnt;
+                }
+                else
+                {
+                    userOfferWallet.ETH = userOfferWallet.ETH - amnt;
+                }
             }
 
             return RedirectToAction("Trade", new { tradeId = mTrade.Id });
@@ -106,7 +116,40 @@ namespace EthMLM.Controllers
         {
             string email = User.Identity.Name;
             var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            if (mTrade.Status != TradeStatus.Active)
+            {
+                return RedirectToAction("Dashboard");
+            }
             mTrade.Status = TradeStatus.Cancelled;
+
+            var userOfferWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == mTrade.OfferEmail);
+            if (mTrade.offer.Coin == Coin.BTC)
+            {
+                userOfferWallet.BTC = userOfferWallet.BTC +mTrade.amnt;
+            }
+            else
+            {
+                userOfferWallet.ETH = userOfferWallet.ETH + mTrade.amnt;
+            }
+
+            return RedirectToAction("Dashboard");
+        }
+        public IActionResult PaymentReceive(Guid tradeId)
+        {
+            string email = User.Identity.Name;
+            var mTrade = EscrowModel._trades.FirstOrDefault(x => x.Id == tradeId);
+            mTrade.Status = TradeStatus.Completed;
+
+            var userWallet = UserWalletModel._userWallet.FirstOrDefault(x => x.Email == mTrade.Email);
+            if (mTrade.offer.Coin == Coin.BTC)
+            {
+                userWallet.BTC = userWallet.BTC + mTrade.amnt;
+            }
+            else
+            {
+                userWallet.ETH = userWallet.ETH + mTrade.amnt;
+            }
+
             return RedirectToAction("Dashboard");
         }
         public IActionResult CreateOffer()
@@ -125,7 +168,7 @@ namespace EthMLM.Controllers
         public IActionResult Dashboard()
         {
             string email = User.Identity.Name;
-            ViewBag.ActiveTrades = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email==email) && x.Status==TradeStatus.Active).ToList();
+            ViewBag.ActiveTrades = EscrowModel._trades.Where(x => (x.OfferEmail == email || x.Email==email) && x.CreationTime.AddMinutes(x.offer.ExpireInMinutes)>DateTime.UtcNow && x.Status==TradeStatus.Active).ToList();
             return View(EscrowModel._offers.Where(x=>x.Email==User.Identity.Name).ToList());
         }
         public IActionResult OfferIsOpenToggle(bool status,DateTime date)
